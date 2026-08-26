@@ -19,7 +19,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: us-east-1
 
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
@@ -30,17 +30,17 @@ jobs:
           context: starter/backend
           push: true
           tags: |
-            ${{ secrets.ECR_REGISTRY }}/movie-backend:latest
+            218549830224.dkr.ecr.us-east-1.amazonaws.com/movie-backend:latest
 
       - name: Configure kubectl
         run: |
           aws eks update-kubeconfig \
-            --region ${{ secrets.AWS_REGION }} \
-            --name ${{ secrets.EKS_CLUSTER_NAME }}
+            --region us-east-1 \
+            --name movie-picture-eks
 
       - name: Deploy backend to EKS
         run: |
           kubectl set image deployment/movie-backend \
-            backend=${{ secrets.ECR_REGISTRY }}/movie-backend:latest
+            backend=218549830224.dkr.ecr.us-east-1.amazonaws.com/movie-backend:latest
 
           kubectl rollout status deployment/movie-backend --timeout=180s
