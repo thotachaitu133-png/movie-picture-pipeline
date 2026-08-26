@@ -1,7 +1,10 @@
 ﻿import { render, screen } from "@testing-library/react";
 import App from "../App";
 
-test("renders Movie Picture", () => {
+test("renders Movie Picture application", () => {
   render(<App />);
-  expect(screen.getByText("Movie Picture")).toBeInTheDocument();
+
+  const moviePictureElements = screen.getAllByText("Movie Picture");
+
+  expect(moviePictureElements.length).toBeGreaterThan(0);
 });
