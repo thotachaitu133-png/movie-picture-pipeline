@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-const apiEndpoint = "http://127.0.0.1:5000";
+const apiEndpoint =
+  "http://a6c2e222a02084a508b09e71143cecb5-1823154042.us-east-1.elb.amazonaws.com:5000";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -20,6 +21,7 @@ function App() {
         const data = await response.json();
         setMovies(data.movies || []);
       } catch (error) {
+        console.error("API Error:", error);
         setMessage("Failed to fetch");
       } finally {
         setLoading(false);
@@ -93,10 +95,7 @@ function App() {
             {movies.map((movie, index) => (
               <article className="movie-card" key={movie.id}>
                 <div className={`movie-poster poster-${index + 1}`}>
-                  <span className="poster-number">
-                    0{movie.id}
-                  </span>
-
+                  <span className="poster-number">0{movie.id}</span>
                   <span className="play-button">▶</span>
                 </div>
 
